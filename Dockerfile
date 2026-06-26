@@ -16,9 +16,9 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Download and extract Godot 4.7 Stable Linux Editor
+# Download and extract Godot 4.7 Stable Linux Editor from GitHub Releases (reliable CDN)
 WORKDIR /opt/godot
-RUN curl -fsSL https://downloads.tuxfamily.org/godotengine/4.7/Godot_v4.7-stable_linux.x86_64.zip -o godot.zip \
+RUN curl -fsSL https://github.com/godotengine/godot/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip -o godot.zip \
     && unzip godot.zip \
     && rm godot.zip \
     && mv Godot_v4.7-stable_linux.x86_64 godot \
