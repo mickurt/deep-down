@@ -24,14 +24,13 @@ RUN curl -fsSL https://github.com/godotengine/godot/releases/download/4.7-stable
     && mv Godot_v4.7-stable_linux.x86_64 godot \
     && chmod +x godot
 
-# Set up the application directory and copy project files
+# Set up the application directory and copy ONLY the pre-compiled server.pck
 WORKDIR /app
-COPY . .
+COPY server.pck .
 
 # Render exposes a random port via the PORT environment variable.
 # Godot will automatically read this environment variable and listen on it.
 EXPOSE 10555
 
-# Run the Godot server headlessly, locating project.godot dynamically to support subfolders.
-# Performs a first headless import pass to build the script class cache before starting the server.
-CMD ["sh", "-c", "PROJECT_PATH=$(find /app -name project.godot | head -n 1 | xargs -I {} dirname '{}'); if [ -z \"$PROJECT_PATH\" ]; then echo \"ERROR: project.godot was not found in /app! Please make sure you have uploaded the project.godot file.\"; exit 1; fi; echo \"Running Godot in project path: $PROJECT_PATH\"; echo \"Step 1: Performing headless import and building script class cache...\"; /opt/godot/godot --headless --path \"$PROJECT_PATH\" --editor --quit || true; echo \"Step 2: Starting dedicated server...\"; /opt/godot/godot --headless --path \"$PROJECT_PATH\""]
+# Run the Godot server headlessly using the pre-compiled server.pck
+CMD ["/opt/godot/godot", "--headless", "--main-pack", "/app/server.pck"]
