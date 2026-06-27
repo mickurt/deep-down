@@ -32,5 +32,5 @@ COPY . .
 # Godot will automatically read this environment variable and listen on it.
 EXPOSE 10555
 
-# Run the Godot server headlessly
-CMD ["/opt/godot/godot", "--headless", "--path", "/app"]
+# Run the Godot server headlessly, locating project.godot dynamically to support subfolders
+CMD ["sh", "-c", "PROJECT_PATH=$(find /app -name project.godot | head -n 1 | xargs -I {} dirname '{}'); echo \"Running Godot in project path: $PROJECT_PATH\"; /opt/godot/godot --headless --path \"$PROJECT_PATH\""]
