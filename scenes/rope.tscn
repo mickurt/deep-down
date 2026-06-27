@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4e6g8b9c1d2"]
+
+[ext_resource type="Script" path="res://scripts/rope_physics.gd" id="1_rope"]
+
+[node name="Rope" type="Line2D"]
+width = 6.0
+default_color = Color(0.121569, 0.878431, 0.701961, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+script = ExtResource("1_rope")
+point_count = 15
+stiffness = 6.0
+
+
+
+
